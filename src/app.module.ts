@@ -1,24 +1,26 @@
 import { MikroOrmModule } from '@mikro-orm/nestjs';
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { AuthModule } from './auth/auth.module';
-import { SurveyModule } from './survey/survey.module';
-import { UsersModule } from './users/users.module';
-import { SurveysModule } from './surveys/surveys.module';
+import { User } from './user/entities/user.entity';
+import { Question } from './question/entities/question.entity';
+import { Survey } from './survey/entities/survey.entity';
+import { BaseEntity } from './utils/BaseEntity';
+
+const logger = new Logger('MikroORM');
 
 @Module({
   imports: [
-    AuthModule,
-    SurveyModule,
-    UsersModule,
     MikroOrmModule.forRoot({
-      entities: ['./dist/entities'],
-      entitiesTs: ['./src/entities'],
-      dbName: 'Quiz',
-      type: 'postgresql',
+      entities: [Question, User, Survey, BaseEntity],
+      dbName: 'survey',
+      type: 'mysql',
+      port: 3007,
+      debug: true,
+      logger: logger.log.bind(logger),
+      entitiesTs: ['./src/*/entities/*'],
+      autoLoadEntities: true,
     }),
-    SurveysModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,5 +1,6 @@
 export class CreateUserDto {
-  name!: string;
+  firstName!: string;
+  lastName!: string;
   username!: string;
   rePassword!: string;
   password!: string;

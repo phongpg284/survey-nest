@@ -6,7 +6,10 @@ import { BaseEntity } from '../../utils/BaseEntity';
 @Entity()
 export class User extends BaseEntity {
   @Property()
-  name!: string;
+  firstName!: string;
+
+  @Property()
+  lastName!: string;
 
   @Property()
   username!: string;

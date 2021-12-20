@@ -1,7 +1,6 @@
-import { Controller, Get, Logger, Post, Req } from '@nestjs/common';
-import { Request } from 'express';
+import { Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { AppService } from './app.service';
-const logger = new Logger('Error');
 
 @Controller()
 export class AppController {
@@ -11,8 +10,10 @@ export class AppController {
   getHello(): string {
     return this.appService.getHello();
   }
-  @Post()
-  findAll(): string {
-    return 'This action returns all cats';
+
+  @UseGuards(AuthGuard('local'))
+  @Post('auth/login')
+  async login(@Request() req) {
+    return req.user;
   }
 }

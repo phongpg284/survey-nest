@@ -7,6 +7,7 @@ import { Survey } from 'src/survey/entities/survey.entity';
 import { UserModule } from 'src/user/user.module';
 import { QuestionModule } from 'src/question/question.module';
 import { SurveyModule } from 'src/survey/survey.module';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { SurveyModule } from 'src/survey/survey.module';
     UserModule,
     SurveyModule,
     QuestionModule,
+    // AuthModule,
   ],
   exports: [MikroOrmModule],
 })

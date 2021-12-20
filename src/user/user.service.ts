@@ -1,5 +1,6 @@
+import * as argon2 from 'argon2';
 import { EntityRepository, wrap } from '@mikro-orm/core';
-import { InjectRepository } from '@mikro-orm/nestjs';
+import { InjectRepository, logger } from '@mikro-orm/nestjs';
 import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -13,16 +14,25 @@ export class UserService {
   ) {}
 
   async create(createUserDto: CreateUserDto) {
-    const { password, rePassword, username, name } = createUserDto;
+    const { password, rePassword, username, firstName, lastName } =
+      createUserDto;
     if (password !== rePassword) return 'Password unmatched!';
+    let hashPassword: string;
+    try {
+      hashPassword = await argon2.hash(password);
+    } catch (error) {
+      logger.log('Error hash password!');
+      return 'Error create account!';
+    }
 
     const user = await this.userRepositor.findOne({ username });
     if (user) return 'User exist!';
 
     const newUser = new User();
     newUser.username = username;
-    newUser.username = password;
-    newUser.name = name;
+    newUser.firstName = firstName;
+    newUser.lastName = lastName;
+    newUser.password = hashPassword;
     await this.userRepositor.persistAndFlush(newUser);
     return newUser;
   }
@@ -35,6 +45,11 @@ export class UserService {
   async findOne(id: number) {
     const user = await this.userRepositor.findOne({ id });
     if (!user) return 'No user found!';
+    return user;
+  }
+
+  async findOneByUsername(username: string) {
+    const user = await this.userRepositor.findOne({ username });
     return user;
   }
 

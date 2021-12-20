@@ -15,5 +15,6 @@ import { Survey } from 'src/survey/entities/survey.entity';
   ],
   controllers: [UserController],
   providers: [UserService],
+  exports: [UserService],
 })
 export class UserModule {}

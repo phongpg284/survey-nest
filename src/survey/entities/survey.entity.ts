@@ -5,9 +5,9 @@ import {
   ManyToOne,
   Property,
 } from '@mikro-orm/core';
-import { Question } from 'src/question/entities/question.entity';
-import { User } from 'src/user/entities/user.entity';
-import { BaseEntity } from 'src/utils/BaseEntity';
+import { Question } from '../../question/entities/question.entity';
+import { User } from '../../user/entities/user.entity';
+import { BaseEntity } from '../../utils/BaseEntity';
 
 @Entity()
 export class Survey extends BaseEntity {

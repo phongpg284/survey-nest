@@ -5,6 +5,7 @@ import { CreateSurveyDto } from './dto/create-survey.dto';
 import { UpdateSurveyDto } from './dto/update-survey.dto';
 import { Survey } from './entities/survey.entity';
 
+@Injectable()
 export class SurveyService {
   constructor(
     @InjectRepository(Survey)

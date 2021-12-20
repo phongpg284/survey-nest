@@ -1,6 +1,7 @@
-import { Property } from '@mikro-orm/core';
-import { BaseEntity } from 'src/utils/BaseEntity';
+import { Entity, Property } from '@mikro-orm/core';
+import { BaseEntity } from '../../utils/BaseEntity';
 
+@Entity()
 export class Question extends BaseEntity {
   @Property()
   title!: string;

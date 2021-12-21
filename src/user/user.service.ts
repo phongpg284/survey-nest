@@ -14,8 +14,7 @@ export class UserService {
   ) {}
 
   async create(createUserDto: CreateUserDto) {
-    const { password, rePassword, username, firstName, lastName } =
-      createUserDto;
+    const { password, rePassword, username, firstName, lastName } = createUserDto;
     if (password !== rePassword) return 'Password unmatched!';
     let hashPassword: string;
     try {

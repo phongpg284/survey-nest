@@ -1,16 +1,12 @@
+import * as argon2 from 'argon2';
 import { Injectable } from '@nestjs/common';
 import { UserService } from 'src/user/user.service';
-import jwt from 'jsonwebtoken';
-import { JWT_SECRET_KEY } from 'src/config/config';
 import { User } from 'src/user/entities/user.entity';
-import { AuthGuard } from '@nestjs/passport';
-import * as argon2 from 'argon2';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-  constructor(
-    private userService: UserService, // private jwtService: JwtService,
-  ) {}
+  constructor(private userService: UserService, private jwtService: JwtService) {}
 
   async validateUser(username: string, password: string): Promise<any> {
     const user = await this.userService.findOneByUsername(username);
@@ -22,8 +18,9 @@ export class AuthService {
   }
 
   async login(user: User) {
+    const accessToken = await this.signToken(user);
     return {
-      accessToken: this.signToken(user),
+      accessToken: accessToken,
     };
   }
 
@@ -32,7 +29,7 @@ export class AuthService {
       username: user.username,
       id: user.id,
     };
-    const accessToken = jwt.sign(payload, JWT_SECRET_KEY);
+    const accessToken = this.jwtService.sign(payload);
     return accessToken;
   }
 }

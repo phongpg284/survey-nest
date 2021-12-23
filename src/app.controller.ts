@@ -21,6 +21,18 @@ export class AppController {
     return this.authService.refresh(req.user);
   }
 
+  @UseGuards(JwtRefreshGuard)
+  @Get('auth/logout')
+  logout(@Request() req) {
+    return this.authService.logout(req.user);
+  }
+
+  @UseGuards(JwtRefreshGuard)
+  @Get('auth/logout_all')
+  logoutAll(@Request() req) {
+    return this.authService.logoutAll(req.user);
+  }
+
   @UseGuards(LocalAuthGuard)
   @Post('auth/login')
   async login(@Request() req) {

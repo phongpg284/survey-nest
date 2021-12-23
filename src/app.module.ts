@@ -3,12 +3,17 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { OrmModule } from './orm/orm.module';
-import { QuestionModule } from './question/question.module';
-import { SurveyModule } from './survey/survey.module';
-import { UserModule } from './user/user.module';
-
+import { options } from './config/redis';
+import { RedisModule } from '@nestjs-modules/ioredis';
 @Module({
-  imports: [OrmModule, AuthModule],
+  imports: [
+    OrmModule,
+    AuthModule,
+    RedisModule.forRoot({
+      config: options,
+    }),
+    // TokenModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

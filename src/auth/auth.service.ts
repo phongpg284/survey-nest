@@ -1,13 +1,16 @@
 import * as argon2 from 'argon2';
 import { Injectable } from '@nestjs/common';
 import { UserService } from 'src/user/user.service';
-import { User } from 'src/user/entities/user.entity';
-import { JwtService } from '@nestjs/jwt';
-import { JWT_SECRET_KEY, REFRESH_JWT_SECRET_KEY } from 'src/config/config';
+import { TokenService } from 'src/token/token.service';
 
+export interface UserRequest {
+  id: number;
+  username: string;
+  tokenID?: string;
+}
 @Injectable()
 export class AuthService {
-  constructor(private userService: UserService, private jwtService: JwtService) {}
+  constructor(private userService: UserService, private tokenService: TokenService) {}
 
   async validateUser(username: string, password: string): Promise<any> {
     const user = await this.userService.findOneByUsername(username);
@@ -19,43 +22,35 @@ export class AuthService {
     return null;
   }
 
-  async refresh(user: User) {
-    const refreshAccessToken = await this.signToken(user);
-    return {
-      refreshAccessToken: refreshAccessToken,
-    };
-  }
+  async refresh(user: UserRequest) {
+    const isRefreshTokenValid = await this.tokenService.getRefreshToken(user);
+    if (!isRefreshTokenValid) return 'Expired Refresh Token!';
 
-  async login(user: User) {
-    const accessToken = await this.signToken(user);
-    const refreshToken = await this.signRefreshToken(user);
+    // SIGN NEW ACCESS TOKEN AND REFRESH TOKEN
+    const accessToken = await this.tokenService.signToken(user);
+    await this.tokenService.removeRefreshToken(user);
+    const refreshToken = await this.tokenService.signRefreshToken(user);
+
     return {
       accessToken: accessToken,
       refreshToken: refreshToken,
     };
   }
 
-  async signToken(user: User) {
-    const payload = {
-      username: user.username,
-      id: user.id,
+  async login(user: UserRequest) {
+    const accessToken = await this.tokenService.signToken(user);
+    const refreshToken = await this.tokenService.signRefreshToken(user);
+    return {
+      accessToken: accessToken,
+      refreshToken: refreshToken,
     };
-    const accessToken = this.jwtService.sign(payload, {
-      secret: JWT_SECRET_KEY,
-      expiresIn: '60s',
-    });
-    return accessToken;
   }
 
-  async signRefreshToken(user: User) {
-    const payload = {
-      username: user.username,
-      id: user.id,
-    };
-    const accessToken = this.jwtService.sign(payload, {
-      secret: REFRESH_JWT_SECRET_KEY,
-      expiresIn: '24h',
-    });
-    return accessToken;
+  async logout(user: UserRequest) {
+    return await this.tokenService.removeRefreshToken(user);
+  }
+
+  async logoutAll(user: UserRequest) {
+    return await this.tokenService.removeRefreshTokenAll(user);
   }
 }

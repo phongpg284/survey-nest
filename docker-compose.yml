@@ -11,6 +11,14 @@ services:
       MYSQL_ALLOW_EMPTY_PASSWORD: 1
     volumes:
       - mysql:/var/lib/mysql
-
+  redis-account:
+    container_name: redis
+    image: redis:alpine
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redisdata:/data
 volumes:
   mysql:
+  redisdata:

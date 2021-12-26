@@ -1,26 +1,51 @@
 {
-  "name": "frontend",
+  "name": "web",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.16.1",
-    "@testing-library/react": "^12.1.2",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.0.3",
-    "@types/node": "^16.11.17",
-    "@types/react": "^17.0.38",
-    "@types/react-dom": "^17.0.11",
+    "@ant-design/icons": "^4.6.2",
+    "@apollo/client": "^3.4.3",
+    "@reduxjs/toolkit": "^1.6.1",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "@types/apollo-upload-client": "^14.1.0",
+    "@types/jest": "^26.0.15",
+    "@types/node": "^12.0.0",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "antd": "^4.16.11",
+    "antd-img-crop": "^3.16.0",
+    "apollo-upload-client": "^16.0.0",
+    "bootstrap": "5.0.2",
+    "dotenv": "^10.0.0",
+    "formik": "^2.2.9",
+    "graphql": "^15.5.1",
+    "graphql-ws": "^5.5.0",
     "react": "^17.0.2",
+    "react-bootstrap": "^2.0.0-beta.4",
     "react-dom": "^17.0.2",
-    "react-scripts": "5.0.0",
-    "typescript": "^4.5.4",
-    "web-vitals": "^2.1.2"
+    "react-icons": "^4.2.0",
+    "react-media-recorder": "^1.6.0",
+    "react-redux": "^7.2.4",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "4.0.3",
+    "recharts": "^2.1.4",
+    "sass": "^1.37.5",
+    "subscriptions-transport-ws": "^0.9.19",
+    "typescript": "^4.3.5",
+    "web-vitals": "^1.0.1",
+    "yup": "^0.32.9"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "dev": "react-scripts start",
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
+    "build-opt": "react-scripts --max-old-space-size=8192 build",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "pre-commit": "lint-staged",
+    "lint": "eslint . --ext .ts,.tsx"
   },
   "eslintConfig": {
     "extends": [
@@ -39,5 +64,16 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/react-router-dom": "^5.1.8",
+    "@typescript-eslint/parser": "^4.29.0",
+    "eslint": "^7.32.0",
+    "eslint-plugin-import": "^2.23.4",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.24.0",
+    "lint-staged": "^11.1.1",
+    "prettier": "^2.3.2",
+    "source-map-explorer": "^2.5.2"
   }
 }

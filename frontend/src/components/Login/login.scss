@@ -1,0 +1,86 @@
+.login-form {
+    font-family: sans-serif;
+    margin-left: auto;
+    background-color:  #F0F3FD;
+    width: 38vw;
+    padding: 0 50px;
+    &-input {
+        margin: auto;
+        margin-bottom: 10px;
+        input {
+            height: 55px;
+            border-radius: 10px;
+        }
+    }
+    &-label {
+        float: left;
+        font-size: 1.1rem;
+        color: #abafb7;
+    }
+    &-role-check {
+        margin-top: 20px;
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        :first-child {
+            font-size: 1.1rem;
+            // font-weight: 600;
+            margin-right: 10px;
+        }
+        div {
+            display: flex;
+            align-items: center;
+            input {
+                height: 18px;
+                width: 18px;
+                margin: 0
+            }
+        }
+    }
+    &-title {
+        font-size: 3rem;
+        text-align: left;
+        font-weight: 600;
+    }
+}
+
+.input-error {
+    font-size: 1rem;
+}
+
+.submit-button {
+    margin: 30px 0 20px 0;
+    button {
+        height: 55px;
+        width: 100%;
+        background-image: linear-gradient(to right,#527fff, #71acff);
+        border: none;
+        border-radius: 10px;
+    }
+}
+
+.create-account-link {
+    color: #306fff;
+    font-size: 1.1rem;
+}
+
+.form-title {
+    text-align: left;
+    font-size: 2.8rem;
+    font-weight: 600;
+    margin-bottom: 50px;
+}
+
+.login-content {
+    max-width: 600px;
+    margin: 20vh auto;
+    // padding: 20px;
+    // margin-top: 20vh;
+    // border: solid 1px
+}
+
+.errors {
+    color: rgb(211, 72, 72);
+    font-family: sans-serif;
+    float: left;
+}

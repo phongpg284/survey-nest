@@ -1,26 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { createContext, useEffect, useRef, useState } from "react";
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
+import { useAppSelector } from "./app/store";
+import LoginPage from "./pages/Login/LoginPage";
+import SignupPage from "./pages/Signup/SignupPage";
+import Main from "pages/Main";
+import { Home } from "components/Home";
+import PrivateRoute from "pages/PrivateRoute";
+export const FooterContext = createContext<any>(null);
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const { accessToken } = useAppSelector((state) => state.account);
+    const [isAuth, setIsAuth] = useState(true);
+    const [route, setRoute] = useState("/");
+    const footerRef = useRef<any>();
+
+    useEffect(() => {
+        setRoute(window.location.pathname);
+    }, [window.location.pathname]);
+
+    useEffect(() => {
+        if (accessToken) setIsAuth(true);
+        else setIsAuth(false);
+    }, [accessToken]);
+
+    return (
+        <div className="App">
+            <FooterContext.Provider value={footerRef}>
+                <BrowserRouter>
+                    {!isAuth && route !== "/" && <Redirect to="/login" />}
+                    <Switch>
+                        <Route exact path="/login" component={LoginPage} />
+                        <Route exact path="/signup" component={SignupPage} />
+                        <Main exact path="/" component={Home} />
+                    </Switch>
+                </BrowserRouter>
+            </FooterContext.Provider>
+        </div>
+    );
 }
 
 export default App;

@@ -120,8 +120,8 @@ export default function Header(props: any) {
                     <div className="header_navigate_bar_item" onClick={() => history.push("/so-cuu")}>
                         Sơ cứu
                     </div>
-                    <div className="header_navigate_bar_item" onClick={() => history.push("/phuc-hoi")}>
-                        Hỗ trợ
+                    <div className="header_navigate_bar_item" onClick={() => history.push("/survey")}>
+                        Khảo sát
                     </div>
                     <div className="header_navigate_bar_item" onClick={() => footerRef.current.scrollIntoView()}>
                         Liên hệ

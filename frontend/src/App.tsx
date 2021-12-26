@@ -7,6 +7,7 @@ import SignupPage from "./pages/Signup/SignupPage";
 import Main from "pages/Main";
 import { Home } from "components/Home";
 import PrivateRoute from "pages/PrivateRoute";
+import Survey from "components/Survey/Survey";
 export const FooterContext = createContext<any>(null);
 
 function App() {
@@ -32,6 +33,7 @@ function App() {
                     <Switch>
                         <Route exact path="/login" component={LoginPage} />
                         <Route exact path="/signup" component={SignupPage} />
+                        <Route exact path="/survey" component={Survey} />
                         <Main exact path="/" component={Home} />
                     </Switch>
                 </BrowserRouter>

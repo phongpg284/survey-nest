@@ -12,23 +12,27 @@ export class QuestionService {
     private readonly questionRepository: EntityRepository<Question>,
   ) {}
 
-  create(createQuestionDto: CreateQuestionDto) {
-    return 'This action adds a new question';
+  async create(createQuestionDto: CreateQuestionDto) {
+    const question = this.questionRepository.create(createQuestionDto);
+    if (!question) return 'Error creating question!';
+
+    await this.questionRepository.persistAndFlush(question);
+    return question;
   }
 
-  findAll() {
+  async findAll() {
     return `This action returns all question`;
   }
 
-  findOne(id: number) {
+  async findOne(id: number) {
     return `This action returns a #${id} question`;
   }
 
-  update(id: number, updateQuestionDto: UpdateQuestionDto) {
+  async update(id: number, updateQuestionDto: UpdateQuestionDto) {
     return `This action updates a #${id} question`;
   }
 
-  remove(id: number) {
+  async remove(id: number) {
     return `This action removes a #${id} question`;
   }
 }

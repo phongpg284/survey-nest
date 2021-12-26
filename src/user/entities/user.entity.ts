@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import { Collection, Entity, OneToMany, Property } from '@mikro-orm/core';
-import { Survey } from '../../survey/entities/survey.entity';
 import { BaseEntity } from '../../utils/BaseEntity';
+import { Record } from '../../record/entities/record.entity';
 
 @Entity()
 export class User extends BaseEntity {
@@ -17,6 +17,6 @@ export class User extends BaseEntity {
   @Property()
   password!: string;
 
-  @OneToMany(() => Survey, (survey) => survey.user)
-  surveys = new Collection<Survey>(this);
+  @OneToMany(() => Record, (record) => record.user)
+  records = new Collection<Record>(this);
 }

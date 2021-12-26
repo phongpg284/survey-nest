@@ -17,4 +17,10 @@ export class Question extends BaseEntity {
 
   @Property()
   point!: number;
+
+  @Property()
+  isMultiple!: boolean;
+
+  @Property({ nullable: true })
+  userAnswer?: [number];
 }

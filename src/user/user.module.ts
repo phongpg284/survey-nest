@@ -5,12 +5,12 @@ import { OrmModule } from 'src/orm/orm.module';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { Question } from 'src/question/entities/question.entity';
 import { User } from './entities/user.entity';
-import { Survey } from 'src/survey/entities/survey.entity';
+import { Record } from 'src/record/entities/record.entity';
 
 @Module({
   imports: [
     MikroOrmModule.forFeature({
-      entities: [User, Survey],
+      entities: [User, Record],
     }),
   ],
   controllers: [UserController],

@@ -1,39 +1,34 @@
 import { EntityRepository } from '@mikro-orm/core';
-import { InjectRepository, logger } from '@mikro-orm/nestjs';
+import { InjectRepository } from '@mikro-orm/nestjs';
 import { Injectable } from '@nestjs/common';
+import { Question } from 'src/question/entities/question.entity';
 import { CreateSurveyDto } from './dto/create-survey.dto';
 import { UpdateSurveyDto } from './dto/update-survey.dto';
 import { Survey } from './entities/survey.entity';
 
 @Injectable()
 export class SurveyService {
-  constructor(
-    @InjectRepository(Survey)
-    private readonly surveyRepository: EntityRepository<Survey>,
-  ) {}
+  constructor() {}
 
-  async create(createSurveyDto: CreateSurveyDto) {
+  create(createSurveyDto: CreateSurveyDto) {
+    const questions: Question[] = [];
+    for (const questionID of createSurveyDto.questions) {
+      // questions.push(this.questionRepository.getReference(questionID));
+    }
     const survey = new Survey();
+    // survey.questions = questions;
     return 'This action adds a new survey';
   }
 
-  async findAll(): Promise<Survey[]> {
-    let survey: Survey[];
-    try {
-      survey = await this.surveyRepository.find({});
-    } catch (error) {
-      logger.error(error);
-    }
-    return survey;
+  findAll() {
+    return `This action returns all survey`;
   }
 
-  async findOne(id: number) {
-    const survey = await this.surveyRepository.findOne({ id });
-    if (!survey) return `Survey ${id} not found`;
-    return survey;
+  findOne(id: number) {
+    return `This action returns a #${id} survey`;
   }
 
-  async update(id: number, updateSurveyDto: UpdateSurveyDto) {
+  update(id: number, updateSurveyDto: UpdateSurveyDto) {
     return `This action updates a #${id} survey`;
   }
 

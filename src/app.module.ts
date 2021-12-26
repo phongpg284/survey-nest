@@ -12,7 +12,6 @@ import { RedisModule } from '@nestjs-modules/ioredis';
     RedisModule.forRoot({
       config: options,
     }),
-    // TokenModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -10,7 +10,7 @@ import { User } from './entities/user.entity';
 export class UserService {
   constructor(
     @InjectRepository(User)
-    private readonly userRepositor: EntityRepository<User>,
+    private readonly userRepository: EntityRepository<User>,
   ) {}
 
   async create(createUserDto: CreateUserDto) {
@@ -24,7 +24,7 @@ export class UserService {
       return 'Error create account!';
     }
 
-    const user = await this.userRepositor.findOne({ username });
+    const user = await this.userRepository.findOne({ username });
     if (user) return 'User exist!';
 
     const newUser = new User();
@@ -32,32 +32,37 @@ export class UserService {
     newUser.firstName = firstName;
     newUser.lastName = lastName;
     newUser.password = hashPassword;
-    await this.userRepositor.persistAndFlush(newUser);
+    await this.userRepository.persistAndFlush(newUser);
     return newUser;
   }
 
   async findAll() {
-    const user = await this.userRepositor.find({});
-    return user;
+    try {
+      const users = await this.userRepository.find({});
+      return users;
+    } catch (error) {
+      logger.error(error);
+      throw new Error(error);
+    }
   }
 
   async findOne(id: number) {
-    const user = await this.userRepositor.findOne({ id });
+    const user = await this.userRepository.findOne({ id });
     if (!user) return 'No user found!';
     return user;
   }
 
   async findOneByUsername(username: string) {
-    const user = await this.userRepositor.findOne({ username });
+    const user = await this.userRepository.findOne({ username });
     return user;
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
-    const user = await this.userRepositor.findOne({ id });
+    const user = await this.userRepository.findOne({ id });
     if (!user) return 'No user found!';
 
     wrap(user).assign(updateUserDto);
-    await this.userRepositor.persistAndFlush(user);
+    await this.userRepository.persistAndFlush(user);
   }
 
   async remove(id: number) {

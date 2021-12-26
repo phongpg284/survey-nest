@@ -25,7 +25,9 @@ export class QuestionService {
   }
 
   async findOne(id: number) {
-    return `This action returns a #${id} question`;
+    const question = await this.questionRepository.findOne({ id });
+    if (!question) return 'No question found!';
+    return question;
   }
 
   async update(id: number, updateQuestionDto: UpdateQuestionDto) {

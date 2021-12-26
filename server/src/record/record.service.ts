@@ -37,7 +37,7 @@ export class RecordService {
     return `This action updates a #${id} record`;
   }
 
-  remove(id: number) {
+  async remove(id: number) {
     return `This action removes a #${id} record`;
   }
 }

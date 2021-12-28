@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { SurveyService } from './survey.service';
 import { CreateSurveyDto } from './dto/create-survey.dto';
 import { UpdateSurveyDto } from './dto/update-survey.dto';
+import { GetResultDto } from './dto/get-result.dto';
 
 @Controller('survey')
 export class SurveyController {
@@ -20,6 +21,11 @@ export class SurveyController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.surveyService.findOne(+id);
+  }
+
+  @Post('/result/:id')
+  getResult(@Param('id') id: string, @Body() getResultDto: GetResultDto) {
+    return this.surveyService.getResult(+id, getResultDto);
   }
 
   @Patch(':id')

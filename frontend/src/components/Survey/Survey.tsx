@@ -104,10 +104,10 @@ const Survey = () => {
                 <li>Total Question: {survey?.totalQuestion}</li>
             </div>
             <div className="survey_content">
-                <div className="survey_content_title content_title">Survey Content</div>
+                {/* <div className="survey_content_title content_title">Survey Content</div> */}
                 <div className="survey_content_main">
                     {!isFinish && questions && questions.length > 0 && (
-                        <div key={questions[index]?.id}>
+                        <div>
                             <div className="survey_question_index">
                                 Question {index + 1}/{questions.length}
                             </div>

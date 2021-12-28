@@ -4,6 +4,7 @@ import { Injectable } from '@nestjs/common';
 import { Question } from 'src/question/entities/question.entity';
 import { QuestionService } from 'src/question/question.service';
 import { CreateSurveyDto } from './dto/create-survey.dto';
+import { GetResultDto } from './dto/get-result.dto';
 import { UpdateSurveyDto } from './dto/update-survey.dto';
 import { Survey } from './entities/survey.entity';
 
@@ -41,6 +42,48 @@ export class SurveyService {
     const survey = await this.surveyRepository.findOne({ id }, ['questions']);
     if (!survey) return 'No survey found!';
     return survey;
+  }
+
+  async getResult(id: number, getResultDto: GetResultDto) {
+    const survey = await this.surveyRepository.findOne({ id }, ['questions']);
+    if (!survey) return 'No survey found!';
+
+    const questions = survey.questions;
+    const userAnswers = getResultDto.answers;
+    let totalPoint = 0;
+
+    let result = {
+      id: id,
+      questions: [],
+      totalPoint: 0,
+    };
+
+    console.log(userAnswers);
+
+    //CALCULATE POINTS
+    for (let i = 0; i < questions.length; i++) {
+      const currentTitle = questions[i]?.title;
+      const currentOptions = questions[i]?.options;
+      const currentAnswer = questions[i]?.answer;
+      const currentPointMax = questions[i]?.point;
+      const userAnswer = userAnswers[i].selected;
+      const rightAnswers = currentAnswer.filter((answer) => userAnswer.includes(answer));
+
+      const pointAcchive = (rightAnswers.length / currentAnswer.length) * currentPointMax;
+
+      result.questions.push({
+        answer: currentAnswer,
+        userAnswer: userAnswer,
+        point: pointAcchive,
+        maxPoint: currentPointMax,
+        title: currentTitle,
+        options: currentOptions,
+      });
+      totalPoint += pointAcchive;
+    }
+    result.totalPoint = totalPoint;
+
+    return result;
   }
 
   async update(id: number, updateSurveyDto: UpdateSurveyDto) {

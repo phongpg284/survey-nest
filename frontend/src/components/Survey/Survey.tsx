@@ -5,10 +5,21 @@ import useFetch from "hooks/useFetch";
 import { useEffect, useState } from "react";
 import Question from "./Question";
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
+import Summary from "./Summary";
 
 export interface QuestionAnswer {
     selected: number[];
     point: number;
+}
+
+export interface IQuestionResponseProps {
+    id: number;
+    title: string;
+    isMultiple: boolean;
+    options: number[];
+    answer: number[];
+    point: number;
+    type?: string;
 }
 
 const Survey = () => {
@@ -16,6 +27,7 @@ const Survey = () => {
     const [response, isFetching, setRequest] = useFetch({} as any);
     const [index, setIndex] = useState<number>(0);
     const [selectAnswers, setSelectAnswers] = useState<QuestionAnswer[]>([]);
+    const [isFinish, setIsFinish] = useState(false);
 
     useEffect(() => {
         setRequest({
@@ -44,13 +56,17 @@ const Survey = () => {
                     point: 0,
                 });
             }
+            setSelectAnswers(protoSelectAnswer);
         }
     }, [survey]);
 
     const handleNext = () => {
         setIndex((prev) => {
             if (prev + 1 < questions?.length) return prev + 1;
-            else return prev;
+            else {
+                setIsFinish(true);
+                return prev;
+            }
         });
     };
     const handleBack = () => {
@@ -62,9 +78,22 @@ const Survey = () => {
     const handleSkip = () => {
         setIndex((prev) => {
             if (prev + 1 < questions?.length) return prev + 1;
-            else return prev;
+            else {
+                setIsFinish(true);
+                return prev;
+            }
         });
     };
+
+    const handleEndQuestion = (questionIndex: number, questionAnswers: number[]) => {
+        const newAnswer = selectAnswers;
+        newAnswer[questionIndex].selected = questionAnswers;
+        setSelectAnswers(newAnswer);
+    };
+
+    useEffect(() => {
+        console.log(selectAnswers);
+    });
 
     return (
         <div className="survey_container">
@@ -77,7 +106,7 @@ const Survey = () => {
             <div className="survey_content">
                 <div className="survey_content_title content_title">Survey Content</div>
                 <div className="survey_content_main">
-                    {questions && questions.length > 0 && (
+                    {!isFinish && questions && questions.length > 0 && (
                         <div key={questions[index]?.id}>
                             <div className="survey_question_index">
                                 Question {index + 1}/{questions.length}
@@ -86,6 +115,7 @@ const Survey = () => {
                                 data={questions[index]}
                                 questionIndex={index}
                                 answersSelect={selectAnswers?.[index]}
+                                handleEndQuestion={handleEndQuestion}
                             />
                             <div className="question_navigate">
                                 <a className="question_navigate_back" onClick={handleBack}>
@@ -101,6 +131,9 @@ const Survey = () => {
                                 </a>
                             </div>
                         </div>
+                    )}
+                    {isFinish && (
+                        <Summary answers={selectAnswers} />
                     )}
                 </div>
             </div>

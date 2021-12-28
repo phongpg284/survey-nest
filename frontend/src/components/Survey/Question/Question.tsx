@@ -1,36 +1,40 @@
 import { ArrowLeftOutlined, ArrowRightOutlined } from "@ant-design/icons";
 import { useEffect, useState } from "react";
 import "../index.scss";
-import { QuestionAnswer } from "../Survey";
+import { IQuestionResponseProps, QuestionAnswer } from "../Survey";
 
 interface IQuestionProps {
-    data: any;
+    data: IQuestionResponseProps;
     answersSelect: QuestionAnswer;
     questionIndex: number;
-    // handleEndQuestion: (questionIndex: number, answer: number[]) => void;
+    handleEndQuestion: (questionIndex: number, answer: number[]) => void;
 }
 
-const Question: React.FC<IQuestionProps> = ({ data, answersSelect, questionIndex }) => {
+const Question: React.FC<IQuestionProps> = ({ data, answersSelect, questionIndex, handleEndQuestion }) => {
     const [selectAnswer, setSelectAnswer] = useState<number[]>([]);
     const handleClickOption = (index: number) => {
-        if (selectAnswer.includes(index)) {
-            setSelectAnswer((prev) => {
-                return prev.filter((selectedIndex) => selectedIndex !== index);
-            });
+        if (data.isMultiple) {
+            if (selectAnswer.includes(index)) {
+                setSelectAnswer((prev) => {
+                    return prev.filter((selectedIndex) => selectedIndex !== index);
+                });
+            } else {
+                setSelectAnswer((prev) => {
+                    return [...prev, index];
+                });
+            }
         } else {
-            setSelectAnswer((prev) => {
-                return [...prev, index];
-            });
+            setSelectAnswer([index]);
         }
-        selectAnswer.indexOf(index);
     };
 
     useEffect(() => {
         if (answersSelect && answersSelect.selected) setSelectAnswer(answersSelect.selected);
-        return () => {
-            console.log("out");
-        };
-    }, []);
+    }, [answersSelect]);
+
+    useEffect(() => {
+        handleEndQuestion(questionIndex, selectAnswer);
+    }, [selectAnswer]);
 
     return (
         <div className="question_container">

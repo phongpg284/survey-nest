@@ -19,7 +19,7 @@ const QuestionPreview: React.FC<IQuestionProps> = ({ data, questionIndex }) => {
     return (
         <div className={`question_preview_container ${isCorrectAnswer ? "question_true" : "question_false"}`}>
             <div className="question_preview_container_title">
-                {questionIndex}. {data?.title}?
+                {questionIndex + 1}. {data?.title}?
             </div>
             <div className="question_preview_container_point">
                 ({data.point}/{data.maxPoint} Points)

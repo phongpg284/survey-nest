@@ -14,17 +14,19 @@
 .survey_info {
     margin: 10px;
     padding: 15px 30px;
-    border: solid 1px;
+    // border: solid 1px;
     border-radius: 20px;
-    background-color: white;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    background-color: #fafafa;
 }
 
 .survey_content {
     margin: 10px;
     padding: 20px;
-    border: solid 1px;
+    // border: solid 1px;
     border-radius: 20px;
-    background-color: white;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    background-color: #fafafa;
 }
 
 .survey_question_index {
@@ -39,8 +41,10 @@
         font-weight: bold;
         text-align: center;
     }
-    li {
-        font-size: 1.2rem;
+    &_description {
+        font-size: 0.9rem;
+        text-align: center;
+        color: #858585;
     }
     &_option_box {
         margin: 5px 20px;
@@ -48,8 +52,12 @@
         flex-wrap: wrap;
         align-items: center;
         &_answer {
+            background-color: white;
+            box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
             &:hover {
-                background-color: #ccbce4;
+                background-color: #bda4e2;
+                color: white;
+                box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
             }
             display: flex;
             margin: 10px;
@@ -58,7 +66,7 @@
             height: 60px;
             padding: 10px;
             border-radius: 5px;
-            border: solid 1px;
+            // border: solid 1px;
             span {
                 margin: 20px;
                 font-size: 1rem;
@@ -68,6 +76,8 @@
 }
 .option_selecting {
     background-color: #8b80b6;
+    color: white;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .question_navigate {

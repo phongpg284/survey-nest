@@ -21,7 +21,7 @@ export class AppController {
     return this.authService.refresh(req.user);
   }
 
-  @UseGuards(JwtRefreshGuard)
+  @UseGuards(JwtAuthGuard)
   @Get('auth/logout')
   logout(@Request() req) {
     return this.authService.logout(req.user);

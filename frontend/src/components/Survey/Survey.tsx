@@ -91,10 +91,6 @@ const Survey = () => {
         setSelectAnswers(newAnswer);
     };
 
-    useEffect(() => {
-        console.log(selectAnswers);
-    });
-
     return (
         <div className="survey_container">
             <div className="survey_info">

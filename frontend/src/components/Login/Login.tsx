@@ -49,7 +49,7 @@ const Login = () => {
                         updateToken({
                             username: payload.username,
                             accessToken: data.accessToken,
-                            refreshToken: data.accessToken,
+                            refreshToken: data.refreshToken,
                             id: payload.id,
                         })
                     );

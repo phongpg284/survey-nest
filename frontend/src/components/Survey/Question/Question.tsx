@@ -39,6 +39,7 @@ const Question: React.FC<IQuestionProps> = ({ data, answersSelect, questionIndex
     return (
         <div className="question_container">
             <div className="question_container_title">{data?.title}?</div>
+            <div className="question_container_description">{data?.isMultiple ? "*Multiple choice" : "*1 answer only"}</div>
             <div className="question_container_option_box">
                 {data.options &&
                     data.options.map((option: any, index: number) => (

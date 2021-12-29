@@ -33,7 +33,7 @@ function App() {
                     <Switch>
                         <Route exact path="/login" component={LoginPage} />
                         <Route exact path="/signup" component={SignupPage} />
-                        <Route exact path="/survey" component={Survey} />
+                        <PrivateRoute exact path="/survey" component={Survey} />
                         <Main exact path="/" component={Home} />
                     </Switch>
                 </BrowserRouter>

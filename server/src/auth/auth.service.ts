@@ -24,7 +24,11 @@ export class AuthService {
 
   async refresh(user: UserRequest) {
     const isRefreshTokenValid = await this.tokenService.getRefreshToken(user);
-    if (!isRefreshTokenValid) return 'Expired Refresh Token!';
+    if (!isRefreshTokenValid)
+      return {
+        message: 'Expired Refresh Token',
+        statusCode: 401,
+      };
 
     // SIGN NEW ACCESS TOKEN AND REFRESH TOKEN
     const accessToken = await this.tokenService.signToken(user);

@@ -10,7 +10,15 @@ import "./header.scss";
 import { BsFillCaretDownFill } from "react-icons/bs";
 import { BiCalendarPlus } from "react-icons/bi";
 import { HiCog } from "react-icons/hi";
-import { FaPhoneAlt, FaUserAlt, FaUserInjured, FaMicrophoneAlt, FaPowerOff, FaBell, FaLaptopMedical } from "react-icons/fa";
+import {
+    FaPhoneAlt,
+    FaUserAlt,
+    FaUserInjured,
+    FaMicrophoneAlt,
+    FaPowerOff,
+    FaBell,
+    FaLaptopMedical,
+} from "react-icons/fa";
 import { GoPrimitiveDot } from "react-icons/go";
 import { GrBarChart } from "react-icons/gr";
 
@@ -25,6 +33,7 @@ import { FooterContext } from "App";
 import { IoGameControllerOutline, IoWatch } from "react-icons/io5";
 import { message, Modal, Tooltip } from "antd";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
+import { ENDPOINT } from "app/config";
 
 export default function Header(props: any) {
     const [state, setState] = useState(0);
@@ -35,6 +44,16 @@ export default function Header(props: any) {
     const dispatch = useAppDispatch();
 
     const handleLogout = () => {
+        fetch(ENDPOINT + "/auth/logout", {
+            method: "GET",
+            headers: {
+                Authorization: "Bearer " + userAccountInfo.refreshToken,
+            },
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+            });
         localStorage.removeItem("state");
         dispatch(
             updateToken({
@@ -53,7 +72,11 @@ export default function Header(props: any) {
             document.addEventListener("click", handleClickOutside);
         }, []);
         function handleClickOutside(event: any) {
-            if (dropController.current && !dropController.current.contains(event.target) && document.querySelector(".header_pops_up")?.classList.contains("header_waitoff")) {
+            if (
+                dropController.current &&
+                !dropController.current.contains(event.target) &&
+                document.querySelector(".header_pops_up")?.classList.contains("header_waitoff")
+            ) {
                 document.querySelector(".header_pops_up")?.classList.remove("header_show");
                 document.querySelector(".header_pops_up")?.classList.remove("header_waitoff");
                 setTimeout(() => {

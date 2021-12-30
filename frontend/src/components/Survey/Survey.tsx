@@ -31,7 +31,7 @@ const Survey = () => {
 
     useEffect(() => {
         setRequest({
-            endPoint: ENDPOINT + "/survey/1",
+            endPoint: ENDPOINT + "/survey/2",
             method: "GET",
         });
     }, []);

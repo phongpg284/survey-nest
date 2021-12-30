@@ -24,7 +24,7 @@ export class TokenService {
     };
     const accessToken = this.jwtService.sign(payload, {
       secret: JWT_SECRET_KEY,
-      expiresIn: '60s',
+      expiresIn: EXPIRE_JWT_SECRET_KEY + 's',
     });
     return accessToken;
   }
@@ -39,7 +39,7 @@ export class TokenService {
     };
     const refreshToken = this.jwtService.sign(payload, {
       secret: REFRESH_JWT_SECRET_KEY,
-      expiresIn: '24h',
+      expiresIn: EXPIRE_REFRESH_JWT_SECRET_KEY + 's',
     });
 
     // SET REDIS REFRESH TOKEN

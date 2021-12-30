@@ -25,7 +25,7 @@ const Summary = ({ answers }: any) => {
 
     useEffect(() => {
         setRequest({
-            endPoint: ENDPOINT + "/survey/result/1",
+            endPoint: ENDPOINT + "/survey/result/2",
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

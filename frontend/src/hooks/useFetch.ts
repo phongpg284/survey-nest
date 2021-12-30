@@ -32,7 +32,8 @@ const useFetch = (req: IReqInfo): [IResInfo, boolean, React.Dispatch<React.SetSt
         })
             .then((res) => res.json())
             .then((data) => {
-                if (data.statusCode === 401 && data.message === "Expired Refresh Token") {
+                console.log(data)
+                if (data.statusCode === 401) {
                     message.error("Token Expired. Please log in again!");
                     dispatch(
                         updateToken({

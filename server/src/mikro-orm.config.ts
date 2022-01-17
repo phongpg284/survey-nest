@@ -7,10 +7,10 @@ const logger = new Logger('MikroORM');
 
 const config: Options = {
   type: 'mysql',
-  host: 'localhost',
-  port: 3307,
+  host: 'mysql',
+  port: 3306,
   user: 'root',
-  password: '',
+  password: 'password',
   dbName: 'surveys',
   entities: ['dist/**/*.entity.js'],
   // entities: ['src/**/*.entity.ts'],
